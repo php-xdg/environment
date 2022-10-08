@@ -1,0 +1,32 @@
+{
+  "name": "xdg/environment",
+  "description": "An abstraction layer over environment variables.",
+  "type": "library",
+  "license": "MIT",
+  "keywords": ["xdg", "freedesktop", "environment", "environment-variables"],
+  "authors": [
+    {
+      "name": "ju1ius",
+      "email": "jules.bernable@gmail.com"
+    }
+  ],
+  "scripts": {
+    "test": "XDEBUG_MODE=off tools/phpunit.phar",
+    "coverage:html": "XDEBUG_MODE=coverage tools/phpunit.phar --coverage-html=tmp/coverage"
+  },
+  "autoload": {
+    "psr-4": {
+      "Xdg\\Environment\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Xdg\\Environment\\Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "php": ">=8.1"
+  },
+  "require-dev": {
+  }
+}
