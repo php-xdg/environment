@@ -2,6 +2,6 @@
 
 namespace Xdg\Environment\Exception;
 
-class EnvironmentException extends \RuntimeException
+interface XdgEnvironmentException extends \Throwable
 {
 }

@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Xdg\Environment\Tests;
+namespace Xdg\Environment\Tests\Provider;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
-use Xdg\Environment\CachingProvider;
 use Xdg\Environment\EnvironmentProviderInterface;
+use Xdg\Environment\Provider\CachingProvider;
 use function PHPUnit\Framework\exactly;
 use function PHPUnit\Framework\once;
 

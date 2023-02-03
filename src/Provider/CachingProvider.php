@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Xdg\Environment;
+namespace Xdg\Environment\Provider;
+
+use Xdg\Environment\EnvironmentProviderInterface;
 
 /**
  * Environment provider that fetches variables from the supplied provider and caches the result.

@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Xdg\Environment\Tests;
+namespace Xdg\Environment\Tests\Provider;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
-use Xdg\Environment\GetenvProvider;
+use Xdg\Environment\Provider\GetenvProvider;
 
 final class GetenvProviderTest extends TestCase
 {

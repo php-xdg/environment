@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace Xdg\Environment\Tests;
+namespace Xdg\Environment\Tests\Provider;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
-use Xdg\Environment\ArrayProvider;
-use Xdg\Environment\ChainProvider;
 use Xdg\Environment\EnvironmentProviderInterface;
+use Xdg\Environment\Provider\ArrayProvider;
+use Xdg\Environment\Provider\ChainProvider;
 use function PHPUnit\Framework\exactly;
 
 final class ChainProviderTest extends TestCase

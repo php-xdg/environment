@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Xdg\Environment\Tests;
+namespace Xdg\Environment\Tests\Provider;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
-use Xdg\Environment\ArrayProvider;
-use Xdg\Environment\Exception\UnexpectedValueException;
+use Xdg\Environment\Exception\NonScalarValueException;
+use Xdg\Environment\Provider\ArrayProvider;
 
 final class ArrayProviderTest extends TestCase
 {
@@ -42,7 +42,7 @@ final class ArrayProviderTest extends TestCase
      */
     public function testGetFailsForNonScalars(array $env, string $key): void
     {
-        $this->expectException(UnexpectedValueException::class);
+        $this->expectException(NonScalarValueException::class);
         $provider = new ArrayProvider($env);
         $provider->get($key);
     }

@@ -1,8 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Xdg\Environment;
+namespace Xdg\Environment\Provider;
 
-use Xdg\Environment\Exception\UnexpectedValueException;
+use Xdg\Environment\EnvironmentProviderInterface;
+use Xdg\Environment\Exception\NonScalarValueException;
 
 /**
  * Environment provider that fetches variables from the supplied array.
@@ -18,7 +19,7 @@ final class ArrayProvider implements EnvironmentProviderInterface
     {
         return match ($value = $this->env[$key] ?? null) {
             null, '', false => null,
-            default => is_scalar($value) ? (string)$value : throw UnexpectedValueException::nonScalar($key, $value),
+            default => is_scalar($value) ? (string)$value : throw NonScalarValueException::of($key, $value),
         };
     }
 
