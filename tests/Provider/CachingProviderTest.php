@@ -3,6 +3,7 @@
 namespace Xdg\Environment\Tests\Provider;
 
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Xdg\Environment\EnvironmentProviderInterface;
 use Xdg\Environment\Provider\CachingProvider;
@@ -11,9 +12,7 @@ use function PHPUnit\Framework\once;
 
 final class CachingProviderTest extends TestCase
 {
-    /**
-     * @dataProvider getValueProvider
-     */
+    #[DataProvider('getValueProvider')]
     public function testGetValue(string $key, ?string $expected): void
     {
         $provider = $this->createMock(EnvironmentProviderInterface::class);
@@ -28,7 +27,7 @@ final class CachingProviderTest extends TestCase
         Assert::assertSame($expected, $cache->get($key));
     }
 
-    public function getValueProvider(): iterable
+    public static function getValueProvider(): iterable
     {
         yield 'null value' => ['foo', null];
         yield 'non-null value' => ['foo', 'bar'];

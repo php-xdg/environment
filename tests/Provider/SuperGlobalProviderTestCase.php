@@ -3,19 +3,19 @@
 namespace Xdg\Environment\Tests\Provider;
 
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\BackupGlobals;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Xdg\Environment\EnvironmentProviderInterface;
 use Xdg\Environment\Exception\NonScalarValueException;
 
-abstract class AbstractSuperGlobalProviderTest extends TestCase
+abstract class SuperGlobalProviderTestCase extends TestCase
 {
     abstract protected static function createProvider(array $env): EnvironmentProviderInterface;
     abstract protected static function fetchEnv(string $key): mixed;
 
-    /**
-     * @dataProvider getValueProvider
-     * @backupGlobals enabled
-     */
+    #[DataProvider('getValueProvider')]
+    #[BackupGlobals(true)]
     public function testGetValue(array $env, string $key, ?string $expected): void
     {
         $provider = static::createProvider($env);
@@ -38,10 +38,8 @@ abstract class AbstractSuperGlobalProviderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getFailsForNonScalarsProvider
-     * @backupGlobals enabled
-     */
+    #[DataProvider('getFailsForNonScalarsProvider')]
+    #[BackupGlobals(true)]
     public function testGetFailsForNonScalars(array $env, string $key): void
     {
         $this->expectException(NonScalarValueException::class);
@@ -49,7 +47,7 @@ abstract class AbstractSuperGlobalProviderTest extends TestCase
         $provider->get($key);
     }
 
-    public function getFailsForNonScalarsProvider(): iterable
+    public static function getFailsForNonScalarsProvider(): iterable
     {
         yield 'array' => [
             ['foo' => []],
@@ -61,9 +59,7 @@ abstract class AbstractSuperGlobalProviderTest extends TestCase
         ];
     }
 
-    /**
-     * @backupGlobals enabled
-     */
+    #[BackupGlobals(true)]
     public function testSetValue(): void
     {
         $provider = static::createProvider([]);
@@ -73,9 +69,7 @@ abstract class AbstractSuperGlobalProviderTest extends TestCase
         Assert::assertSame($value, static::fetchEnv($key));
     }
 
-    /**
-     * @backupGlobals enabled
-     */
+    #[BackupGlobals(true)]
     public function testUnsetValue(): void
     {
         $key = uniqid(__METHOD__);

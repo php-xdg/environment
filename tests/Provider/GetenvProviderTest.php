@@ -3,14 +3,13 @@
 namespace Xdg\Environment\Tests\Provider;
 
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Xdg\Environment\Provider\GetenvProvider;
 
 final class GetenvProviderTest extends TestCase
 {
-    /**
-     * @dataProvider getValueProvider
-     */
+    #[DataProvider('getValueProvider')]
     public function testGetValue(array $env, string $key, ?string $expected): void
     {
         $provider = new GetenvProvider();
@@ -22,7 +21,7 @@ final class GetenvProviderTest extends TestCase
         }
     }
 
-    public function getValueProvider(): iterable
+    public static function getValueProvider(): iterable
     {
         yield 'returns the value from the array' => [
             ['FOO' => 'bar'],

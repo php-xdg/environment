@@ -3,22 +3,21 @@
 namespace Xdg\Environment\Tests\Provider;
 
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Xdg\Environment\Exception\NonScalarValueException;
 use Xdg\Environment\Provider\ArrayProvider;
 
 final class ArrayProviderTest extends TestCase
 {
-    /**
-     * @dataProvider getValueProvider
-     */
+    #[DataProvider('getValueProvider')]
     public function testGetValue(array $env, string $key, ?string $expected): void
     {
         $provider = new ArrayProvider($env);
         Assert::assertSame($expected, $provider->get($key));
     }
 
-    public function getValueProvider(): iterable
+    public static function getValueProvider(): iterable
     {
         yield 'returns the value from the array' => [
             ['foo' => 'bar'],
@@ -37,9 +36,7 @@ final class ArrayProviderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getFailsForNonScalarsProvider
-     */
+    #[DataProvider('getFailsForNonScalarsProvider')]
     public function testGetFailsForNonScalars(array $env, string $key): void
     {
         $this->expectException(NonScalarValueException::class);
@@ -47,7 +44,7 @@ final class ArrayProviderTest extends TestCase
         $provider->get($key);
     }
 
-    public function getFailsForNonScalarsProvider(): iterable
+    public static function getFailsForNonScalarsProvider(): iterable
     {
         yield 'array' => [
             ['foo' => []],
@@ -59,9 +56,7 @@ final class ArrayProviderTest extends TestCase
         ];
     }
     
-    /**
-     * @dataProvider setValueProvider
-     */
+    #[DataProvider('setValueProvider')]
     public function testSetValue(array $env, string $key, string $value, ?string $expected): void
     {
         $provider = new ArrayProvider($env);
@@ -69,7 +64,7 @@ final class ArrayProviderTest extends TestCase
         Assert::assertSame($expected, $provider->get($key));
     }
 
-    public function setValueProvider(): iterable
+    public static function setValueProvider(): iterable
     {
         yield [
             [], 'foo', 'bar', 'bar',
@@ -79,9 +74,7 @@ final class ArrayProviderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider unsetValueProvider
-     */
+    #[DataProvider('unsetValueProvider')]
     public function testUnsetValue(array $env, string $key): void
     {
         $provider = new ArrayProvider($env);
@@ -89,7 +82,7 @@ final class ArrayProviderTest extends TestCase
         Assert::assertNull($provider->get($key));
     }
 
-    public function unsetValueProvider(): iterable
+    public static function unsetValueProvider(): iterable
     {
         yield 'unset key' => [
             ['foo' => 'bar'], 'foo',

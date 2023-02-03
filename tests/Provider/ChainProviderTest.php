@@ -3,6 +3,7 @@
 namespace Xdg\Environment\Tests\Provider;
 
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Xdg\Environment\EnvironmentProviderInterface;
 use Xdg\Environment\Provider\ArrayProvider;
@@ -11,9 +12,7 @@ use function PHPUnit\Framework\exactly;
 
 final class ChainProviderTest extends TestCase
 {
-    /**
-     * @dataProvider getValueProvider
-     */
+    #[DataProvider('getValueProvider')]
     public function testGetValue(array $envs, string $key, ?string $expected): void
     {
         $provider = new ChainProvider(
@@ -22,7 +21,7 @@ final class ChainProviderTest extends TestCase
         Assert::assertSame($expected, $provider->get($key));
     }
 
-    public function getValueProvider(): iterable
+    public static function getValueProvider(): iterable
     {
         yield 'returns null for empty chain' => [
             [],

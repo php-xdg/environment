@@ -5,7 +5,7 @@ namespace Xdg\Environment\Tests\Provider;
 use Xdg\Environment\EnvironmentProviderInterface;
 use Xdg\Environment\Provider\EnvSuperGlobalProvider;
 
-final class EnvSuperGlobalProviderTest extends AbstractSuperGlobalProviderTest
+final class EnvSuperGlobalProviderTest extends SuperGlobalProviderTestCase
 {
     protected static function createProvider(array $env): EnvironmentProviderInterface
     {
