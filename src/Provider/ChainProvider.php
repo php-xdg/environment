@@ -5,7 +5,7 @@ namespace Xdg\Environment\Provider;
 use Xdg\Environment\EnvironmentProviderInterface;
 
 /**
- * Environment provider that fetches variables from a chain of provider,
+ * Environment provider that fetches variables from a chain of providers,
  * returning the first non-null value found.
  */
 final class ChainProvider implements EnvironmentProviderInterface
