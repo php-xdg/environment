@@ -9,10 +9,16 @@ use Xdg\Environment\EnvironmentProviderInterface;
  */
 final class GetenvProvider implements EnvironmentProviderInterface
 {
+    public function __construct(
+        private readonly bool $emptyStringIsNull = true,
+    ) {
+    }
+
     public function get(string $key): ?string
     {
         return match ($value = getenv($key)) {
-            '', false => null,
+            false => null,
+            '' => $this->emptyStringIsNull ? null : '',
             default => $value,
         };
     }

@@ -11,14 +11,14 @@ use Xdg\Environment\Exception\NonScalarValueException;
 
 abstract class SuperGlobalProviderTestCase extends TestCase
 {
-    abstract protected static function createProvider(array $env): EnvironmentProviderInterface;
+    abstract protected static function createProvider(array $env, ...$args): EnvironmentProviderInterface;
     abstract protected static function fetchEnv(string $key): mixed;
 
     #[DataProvider('getValueProvider')]
     #[BackupGlobals(true)]
-    public function testGetValue(array $env, string $key, ?string $expected): void
+    public function testGetValue(array $env, string $key, ?string $expected, $args = []): void
     {
-        $provider = static::createProvider($env);
+        $provider = static::createProvider($env, ...$args);
         Assert::assertSame($expected, $provider->get($key));
     }
 
@@ -30,11 +30,15 @@ abstract class SuperGlobalProviderTestCase extends TestCase
         yield '[internal] ensure env is cleaned up' => [
             [], 'foo', null,
         ];
-        yield 'coerces "" to null' => [
+        yield 'coerces scalars to string' => [
+            ['foo' => false], 'foo', '0',
+        ];
+        yield 'coerces empty string to null by default' => [
             ['foo' => ''], 'foo', null,
         ];
-        yield 'coerces false to null' => [
-            ['foo' => false], 'foo', null,
+        yield 'does not coerce empty string to null when told not to' => [
+            ['foo' => ''], 'foo', '',
+            ['emptyStringIsNull' => false],
         ];
     }
 

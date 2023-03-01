@@ -11,28 +11,33 @@ use Xdg\Environment\Provider\ArrayProvider;
 final class ArrayProviderTest extends TestCase
 {
     #[DataProvider('getValueProvider')]
-    public function testGetValue(array $env, string $key, ?string $expected): void
+    public function testGetValue(array $env, bool $emptyStringIsNull, string $key, ?string $expected): void
     {
-        $provider = new ArrayProvider($env);
+        $provider = new ArrayProvider($env, $emptyStringIsNull);
         Assert::assertSame($expected, $provider->get($key));
     }
 
     public static function getValueProvider(): iterable
     {
         yield 'returns the value from the array' => [
-            ['foo' => 'bar'],
+            ['foo' => 'bar'], true,
             'foo',
             'bar',
         ];
-        yield 'coerces false to null' => [
-            ['foo' => false],
+        yield 'coerces false to 0' => [
+            ['foo' => false], true,
+            'foo',
+            '0',
+        ];
+        yield 'coerces empty string to null by default' => [
+            ['foo' => ''], true,
             'foo',
             null,
         ];
-        yield 'coerces "" to null' => [
-            ['foo' => ''],
+        yield 'does not coerce empty string to null when told not to' => [
+            ['foo' => ''], false,
             'foo',
-            null,
+            '',
         ];
     }
 
@@ -55,7 +60,7 @@ final class ArrayProviderTest extends TestCase
             'foo',
         ];
     }
-    
+
     #[DataProvider('setValueProvider')]
     public function testSetValue(array $env, string $key, string $value, ?string $expected): void
     {

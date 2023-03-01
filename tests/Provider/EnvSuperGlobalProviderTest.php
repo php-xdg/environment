@@ -7,13 +7,13 @@ use Xdg\Environment\Provider\EnvSuperGlobalProvider;
 
 final class EnvSuperGlobalProviderTest extends SuperGlobalProviderTestCase
 {
-    protected static function createProvider(array $env): EnvironmentProviderInterface
+    protected static function createProvider(array $env, ...$args): EnvironmentProviderInterface
     {
         foreach ($env as $key => $value) {
             $_ENV[$key] = $value;
         }
 
-        return new EnvSuperGlobalProvider();
+        return new EnvSuperGlobalProvider(...$args);
     }
 
     protected static function fetchEnv(string $key): mixed

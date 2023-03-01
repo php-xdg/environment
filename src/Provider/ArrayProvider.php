@@ -12,13 +12,16 @@ final class ArrayProvider implements EnvironmentProviderInterface
 {
     public function __construct(
         private array $env,
+        private readonly bool $emptyStringIsNull = true,
     ) {
     }
 
     public function get(string $key): ?string
     {
         return match ($value = $this->env[$key] ?? null) {
-            null, '', false => null,
+            null => null,
+            '' => $this->emptyStringIsNull ? null : '',
+            false => '0',
             default => is_scalar($value) ? (string)$value : throw NonScalarValueException::of($key, $value),
         };
     }

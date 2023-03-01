@@ -10,10 +10,17 @@ use Xdg\Environment\Exception\NonScalarValueException;
  */
 final class ServerSuperGlobalProvider implements EnvironmentProviderInterface
 {
+    public function __construct(
+        private readonly bool $emptyStringIsNull = true,
+    ) {
+    }
+
     public function get(string $key): ?string
     {
         return match ($value = $_SERVER[$key] ?? null) {
-            null, '', false => null,
+            null => null,
+            '' => $this->emptyStringIsNull ? null : '',
+            false => '0',
             default => is_scalar($value) ? (string)$value : throw NonScalarValueException::of($key, $value),
         };
     }
