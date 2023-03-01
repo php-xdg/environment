@@ -12,8 +12,8 @@ final class XdgEnvironment
     public static function default(): EnvironmentProviderInterface
     {
         return new ChainProvider(
-            new ServerSuperGlobalProvider(),
             new EnvSuperGlobalProvider(),
+            new ServerSuperGlobalProvider(),
             new GetenvProvider(),
         );
     }
