@@ -22,4 +22,31 @@ final class ServerSuperGlobalProviderTest extends SuperGlobalProviderTestCase
     {
         return $_SERVER[$key] ?? null;
     }
+
+    #[BackupGlobals(true)]
+    public function testGetIgnoresHttpVariables(): void
+    {
+        $provider = self::createProvider([
+            'HTTP_FOO' => 'foo',
+        ]);
+        Assert::assertNull($provider->get('HTTP_FOO'));
+    }
+
+    #[BackupGlobals(true)]
+    public function testSetIgnoresHttpVariables(): void
+    {
+        $provider = self::createProvider([]);
+        $provider->set('HTTP_FOO', 'bar');
+        Assert::assertNull(self::fetchEnv('HTTP_FOO'));
+    }
+
+    #[BackupGlobals(true)]
+    public function testUnsetIgnoresHttpVariables(): void
+    {
+        $provider = self::createProvider([
+            'HTTP_FOO' => 'foo',
+        ]);
+        $provider->unset('HTTP_FOO');
+        Assert::assertSame('foo', self::fetchEnv('HTTP_FOO'));
+    }
 }

@@ -12,11 +12,15 @@ final class ServerSuperGlobalProvider implements EnvironmentProviderInterface
 {
     public function __construct(
         private readonly bool $emptyStringIsNull = true,
+        private readonly bool $ignoreHttp = true,
     ) {
     }
 
     public function get(string $key): ?string
     {
+        if ($this->ignoreHttp && str_starts_with($key, 'HTTP_')) {
+            return null;
+        }
         return match ($value = $_SERVER[$key] ?? null) {
             null => null,
             '' => $this->emptyStringIsNull ? null : '',
@@ -27,11 +31,17 @@ final class ServerSuperGlobalProvider implements EnvironmentProviderInterface
 
     public function set(string $key, string $value): void
     {
+        if ($this->ignoreHttp && str_starts_with($key, 'HTTP_')) {
+            return;
+        }
         $_SERVER[$key] = $value;
     }
 
     public function unset(string $key): void
     {
+        if ($this->ignoreHttp && str_starts_with($key, 'HTTP_')) {
+            return;
+        }
         unset($_SERVER[$key]);
     }
 }
