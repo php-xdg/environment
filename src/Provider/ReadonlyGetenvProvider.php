@@ -5,10 +5,9 @@ namespace Xdg\Environment\Provider;
 use Xdg\Environment\EnvironmentProviderInterface;
 
 /**
- * Environment provider that reads variables using {@see getenv()},
- * and uses {@see putenv()} for writing.
+ * Readonly version of the {@see GetenvProvider}.
  */
-final class GetenvProvider implements EnvironmentProviderInterface
+final class ReadonlyGetenvProvider implements EnvironmentProviderInterface
 {
     public function __construct(
         private readonly bool $emptyStringIsNull = true,
@@ -26,11 +25,9 @@ final class GetenvProvider implements EnvironmentProviderInterface
 
     public function set(string $key, string $value): void
     {
-        putenv("{$key}={$value}");
     }
 
     public function unset(string $key): void
     {
-        putenv($key);
     }
 }
