@@ -5,7 +5,6 @@ namespace Xdg\Environment\Tests\Provider;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Xdg\Environment\Provider\GetenvProvider;
 use Xdg\Environment\Provider\ReadonlyGetenvProvider;
 
 final class ReadonlyGetenvProviderTest extends TestCase
