@@ -3,7 +3,12 @@
   "description": "An abstraction layer over environment variables.",
   "type": "library",
   "license": "MIT",
-  "keywords": ["xdg", "freedesktop", "environment", "environment-variables"],
+  "keywords": [
+    "xdg",
+    "freedesktop",
+    "environment",
+    "environment-variables"
+  ],
   "authors": [
     {
       "name": "ju1ius",
@@ -27,6 +32,5 @@
   "require": {
     "php": ">=8.1"
   },
-  "require-dev": {
-  }
+  "require-dev": {}
 }
